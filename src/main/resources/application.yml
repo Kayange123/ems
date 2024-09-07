@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev
+
+  application:
+    name: Employees Management System
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    user:
+      name: ${API_SECURITY_USERNAME}
+      password: ${API_SECURITY_PASSWORD}
+
+server:
+  servlet:
+    context-path: /api

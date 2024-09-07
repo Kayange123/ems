@@ -1,0 +1,23 @@
+services:
+  postgres:
+    container_name: postgres-sql-ems
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: employees-management-db
+    volumes:
+      - postgres:/data/postgresql
+    ports:
+      - 5434:5432
+    networks:
+      - spring-demo
+
+networks:
+  spring-demo:
+      driver: bridge
+
+volumes:
+  postgres:
+    driver: local

@@ -1,0 +1,8 @@
+# Database server settings
+
+DATABASE_URL: jdbc:postgresql://localhost:5434/employees-management-db
+DATABASE_USERNAME: username
+DATABASE_PASSWORD: password
+
+API_SECURITY_USERNAME: username
+API_SECURITY_PASSWORD: password
