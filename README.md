@@ -1,4 +1,4 @@
-# Books Management System
+# Employees Management System
 
 The Books Management System is a comprehensive platform designed to manage and organize book collections efficiently. It caters to libraries, bookstores, and individual book enthusiasts by providing tools for cataloging, tracking, and maintaining a database of books. The system offers features like book registration, borrowing, returning, and searching capabilities, making it easier to manage large collections and enhance user experience.
 
