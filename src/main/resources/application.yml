@@ -19,10 +19,6 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-  security:
-    user:
-      name: ${API_SECURITY_USERNAME}
-      password: ${API_SECURITY_PASSWORD}
 
 server:
   servlet:

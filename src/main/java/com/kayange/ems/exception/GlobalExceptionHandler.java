@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -246,6 +248,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 );
     }
 
+    @ExceptionHandler({AuthenticationException.class, AccessDeniedException.class})
+    public ResponseEntity<ApiResponse<?>> authenticationExceptionHandler(){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(
+                        ApiResponse.builder()
+                                .code(HttpStatus.UNAUTHORIZED.value())
+                                .status(HttpStatus.UNAUTHORIZED.name())
+                                .success(false)
+                                .error("You are not authenticated")
+                                .build()
+                );
+    }
+
+
+
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiResponse<?>> resourceNotFoundExceptionHandler(ResourceNotFoundException e){
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -286,4 +303,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                 .build()
                 );
     }
+
+
 }

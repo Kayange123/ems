@@ -1,111 +1,80 @@
 # Employees Management System
 
-The Books Management System is a comprehensive platform designed to manage and organize book collections efficiently. It caters to libraries, bookstores, and individual book enthusiasts by providing tools for cataloging, tracking, and maintaining a database of books. The system offers features like book registration, borrowing, returning, and searching capabilities, making it easier to manage large collections and enhance user experience.
+The Employees Management System is a comprehensive platform designed to manage and 
+organize employees details efficiently. It caters to organizations, stores, and individuals by providing tools for storing, tracking,
+and maintaining details of employees. 
+The system offers features like adding employee, deleting employee, updating employee details, and searching capabilities, 
+making it easier to manage large collections and enhance user experience.
 
 ## Features
 
-- **Book Cataloging**: Easily add, edit, and delete book records with detailed information such as title, author, genre, and publication year.
-- **Borrowing and Returning**: Manage the lending process with options to track borrowed books, due dates, and return statuses.
-- **User Management**: Handle multiple user roles with varying permissions, including administrators, librarians, and patrons.
-- **Search and Filter**: Quickly find books using advanced search and filtering options based on various criteria.
-- **Notifications**: Receive alerts and notifications for due dates, overdue books, and system updates.
-- **Reports and Analytics**: Generate insightful reports on book usage, borrowing trends, and user activity.
+- **Adding Employee**: Easily add employee to the database.
+- **Updating Employee**: Update employee details.
+- **Delete Employee**: Permanent delete employee details from DB.
+- **Retrieve All Employees**: Retrieve all available employees paginated as per requesters' request.
+- **Retrieve specific employee**: Retrieve specific employees by their IDs.
+- **Secured API access**: To avoid leakage of employees' details, Only authorized requests will receive success responses.
 
-## Technologies Used
+## Folder Structure
 
-- **Backend**: Built with Spring Boot, providing a robust and scalable server-side application.
-- **Frontend**: Developed using Angular, offering a dynamic and responsive user interface.
-- **Database**: Utilizes PostgreSQL for data storage, ensuring reliable and efficient data management.
-- **Authentication**: Secured with JWT-based authentication for user login and access control.
+The folders are arranged in such a way that they align with spring's Model-View-Controller (MVC) design pattern
+
+- **api**: This folder keeps all controllers, Which receives HttpRequest and forward them to their appropriate services.
+- **service**: This folder keeps all files containing the business logic of the specific request.
+- **dao**: This folder contains all classes/interfaces (Data Access Objects) which have direct interaction with datasource.
+- **security**: Security related configurations reside in this folder.
+- **entity**: All JPA persisted objects reside in this folder i.e. Employee.
+- **exception**: All custom exceptions and exception handler reside in this folder.
+- **constants**: Constants data are stored in this folder.
+- **config**: Other configurations reside in this folder i.e. OpenApi Configurations.
+- **dto**: This folder stores Data Transfer Objects to transfer data between clients and DB.
 
 ## Installation
 
 ### Prerequisites
 
-Ensure you have the following software installed on your machine:
+To have this project up and running, following pieces of software should be installed on your machine:
 
 - Java Development Kit (JDK) 11 or higher
 - Maven
-- Node.js and npm
-- PostgreSQL
-- Optional Docker Desktop (with postgres and maildev/maildev images)
+- Docker Desktop (with postgres image)
 
 ### Backend Setup
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/Kayange123/books-management-system.git
-   cd books-management-system/backend
+   git clone https://github.com/Kayange123/ems.git
+   cd ems
 
 2. **Configure the database:**
-Update the database configuration in src/main/resources/application.example.properties:
-  ```sh
-  spring.datasource.url=jdbc:postgresql://localhost:5432/your-database
-  spring.datasource.username=your-username
-  spring.datasource.password=your-password
-  spring.jpa.hibernate.ddl-auto=update
-  ```
-  
-3. **Build the backend:**
-```sh
-Copy code
-mvn clean install
-```
+Update the database configuration in src/main/resources/application.example.yml:
+   ```ruby
+   DATABASE_URL: jdbc:postgresql://localhost:5434/employees-management-db
+   DATABASE_USERNAME: username
+   DATABASE_PASSWORD: password
+   ```
 
-4. **Run the backend:**
-```sh
-mvn spring-boot:run
-```
+3. **Run the backend:**
+   ```sh
+   mvn clean install
+   mvn spring-boot:run
+   ```
 
 The backend server should now be running on `http://localhost:8080`.
 
-## Frontend Setup
+## Dependencies Used
 
-Navigate to the frontend directory:
+> Spring Starter packages
 
-```sh
-cd /booker-ui
-```
+1. spring-boot-starter-data-jpa - Jakarta Persistence Api To persist data into relational databases
+2. spring-boot-starter-validation - To Validate data across the system
+3. spring-boot-starter-security - To secure the APIs
+4. springdoc-openapi-starter-webmvc-ui - To enable OpenAPI Swagger integration
+5. postgresql - PostgreSQL Database Driver
+6. spring-boot-starter-web - To expose RESTFull APIs
+7. lombok - To reduce boilerplate codes
+8. spring-boot-starter-test - Testing library which includes assertj-core, awaitility, mockito-core etc
 
-Install Angular CLI globally if you haven't already:
+> Other packages
 
-```sh
-npm install -g @angular/cli
-```
-
-Install dependencies:
-
-```sh
-npm install
-```
-
-Run the frontend:
-
-```sh
-ng serve
-```
-
-The frontend application should now be running on `http://localhost:4200`.
-
-## Configuration
-
-Backend: Configure the backend application properties in `src/main/resources/application.properties.`
-Frontend: Configure the frontend environment variables in `src/environments/environment.ts`.
-
-## Usage
-Open your web browser and navigate to `http://localhost:4200`.
-Log in using your credentials (if applicable).
-Manage book records, handle borrowing and returning processes, and generate reports.
-
-## Contributing
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-branch`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature-branch`).
-5. Create a new Pull Request.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-## Acknowledgements
-We would like to thank all contributors and the open-source community for their valuable support and resources.
+1. swagger-annotations - Annotations for OpenApi Documentation with swagger.

@@ -22,8 +22,7 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceImplTest {
@@ -56,8 +55,20 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-    void shouldUpdateEmployee() {
+    void shouldUpdateEmployeeWhenIdExists() {
+        //Given
+        long employeeId = 1L;
+        var employeeRequest = new EmployeeRequest("Ayubu", "kayange", "ayubu@kayange.com", "CoICT", 200.8);
+        //--> Create employee object
+        var employee = Employee.builder().salary(employeeRequest.salary()).firstName(employeeRequest.firstName())
+                .lastName(employeeRequest.lastName()).email(employeeRequest.email()).department(employeeRequest.department()).build();
 
+        //When
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+        testService.updateEmployee(employeeRequest, employeeId);
+
+        //Then
+        verify(employeeRepository).save(employee);
     }
 
     @Test
@@ -87,15 +98,34 @@ class EmployeeServiceImplTest {
 
     @Test
     void shouldFindEmployeeById(){
+        //Given
+        long employeeId = 2L;
+        Employee employee = new Employee(employeeId, "John","Doe","john@doe.com","ICT", 100.0, null, null);
 
+        //When
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+        var foundEmployee = testService.findEmployeeById(employeeId);
+
+        //Then
+        assertNotNull(foundEmployee);
+        assertEquals(employeeId, foundEmployee.getId());
+        assertEquals("John", employee.getFirstName());
     }
 
     @Test
-    void shouldDeleteEmployee() {
+    void shouldDeleteEmployeeWhenIdExists() {
         //Given
+        long employeeId = 52L;
+        Employee employee = new Employee(employeeId, "John","Doe","john@doe.com","ICT", 100.0, null, null);
 
         //When
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(employee));
+        var foundEmployee = testService.findEmployeeById(employeeId);
+        doNothing().when(employeeRepository).delete(foundEmployee);
+        testService.deleteEmployee(foundEmployee.getId());
         //Then
+        verify(employeeRepository, times(1)).delete(foundEmployee);
+
     }
 
     @Test

@@ -1,9 +1,11 @@
 package com.kayange.ems.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -15,7 +17,11 @@ import org.springframework.security.web.SecurityFilterChain;
 import static com.kayange.ems.constants.AppConstants.PUBLIC_PATHS;
 
 @Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final AuthEntryPoint authEntryPoint;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
@@ -25,8 +31,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request->
                         request.requestMatchers(PUBLIC_PATHS).permitAll()
                                 .anyRequest().authenticated()
-                        ).httpBasic(Customizer.withDefaults());
-
+                        ).httpBasic(Customizer.withDefaults()
+                )
+                .exceptionHandling(ex-> ex.authenticationEntryPoint(authEntryPoint));
         return security.build();
     }
 
@@ -35,5 +42,4 @@ public class SecurityConfig {
         UserDetails user = User.withUsername("username").password("{noop}password").build();
         return new InMemoryUserDetailsManager(user);
     }
-
 }

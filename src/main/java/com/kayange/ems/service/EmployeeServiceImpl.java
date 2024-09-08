@@ -34,14 +34,14 @@ public class EmployeeServiceImpl implements EmployeeService{
     @Override
     public void updateEmployee(EmployeeRequest request, Long employeeId) {
         var employee = findEmployeeById(employeeId);
+        var emailExists = findFirstByEmail(request.email());
         if(Objects.nonNull(request.firstName())){employee.setFirstName(request.firstName());}
         if(Objects.nonNull(request.lastName())){employee.setLastName(request.lastName());}
         if (Objects.nonNull(request.department())){employee.setDepartment(request.department());}
         if (Objects.nonNull(request.salary())){employee.setSalary(request.salary());}
-        if (Objects.nonNull(request.email())){employee.setEmail(request.email());}
+        if (Objects.nonNull(request.email()) && emailExists ==null){employee.setEmail(request.email());}
         employeeRepository.save(employee);
     }
-
     @Override
     public Employee findEmployeeById(Long employeeId) {
         return employeeRepository.findById(employeeId)
