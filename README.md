@@ -62,6 +62,15 @@ Update the database configuration in src/main/resources/application.example.yml:
 
 The backend server should now be running on `http://localhost:8080`.
 
+
+## Security
+
+The security form used is Basic Authentication with default credentials
+
+username: `username`
+password: `password`
+
+
 ## Dependencies Used
 
 > Spring Starter packages
